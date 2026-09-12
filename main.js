@@ -4,17 +4,14 @@ import prettyPrint from "./prettyPrint.js";
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 prettyPrint(tree.root);
 
-console.log("--- In-order (left, node, right) ---");
-const inOrder = [];
-tree.inOrderForEach((value) => inOrder.push(value));
-console.log(inOrder); // should be sorted ascending
+console.log("--- Height ---");
+console.log(tree.height(8));   // height of the root
+console.log(tree.height(9));   // height of some inner node
+console.log(tree.height(3));   // height of a leaf -> should be 0
+console.log(tree.height(999)); // doesn't exist -> undefined
 
-console.log("--- Pre-order (node, left, right) ---");
-const preOrder = [];
-tree.preOrderForEach((value) => preOrder.push(value));
-console.log(preOrder);
-
-console.log("--- Post-order (left, right, node) ---");
-const postOrder = [];
-tree.postOrderForEach((value) => postOrder.push(value));
-console.log(postOrder);
+console.log("--- Depth ---");
+console.log(tree.depth(8));    // root -> should be 0
+console.log(tree.depth(9));    // some inner node
+console.log(tree.depth(3));    // deeper leaf
+console.log(tree.depth(999));  // doesn't exist -> undefined

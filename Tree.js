@@ -131,6 +131,38 @@ class Tree {
     this.postOrderForEach(callback, node.right);
     callback(node.data);
   }
+
+    height(value, node = this.#find(value, this.root)) {
+    if (node === null || node === undefined) return undefined;
+
+    const calculateHeight = (current) => {
+      if (current === null) return -1;
+      const leftHeight = calculateHeight(current.left);
+      const rightHeight = calculateHeight(current.right);
+      return Math.max(leftHeight, rightHeight) + 1;
+    };
+
+    return calculateHeight(node);
+  }
+
+  depth(value, node = this.root, currentDepth = 0) {
+    if (node === null) return undefined;
+
+    if (value === node.data) return currentDepth;
+
+    if (value < node.data) {
+      return this.depth(value, node.left, currentDepth + 1);
+    } else {
+      return this.depth(value, node.right, currentDepth + 1);
+    }
+  }
+
+  #find(value, node) {
+    if (node === null) return null;
+    if (value === node.data) return node;
+    if (value < node.data) return this.#find(value, node.left);
+    return this.#find(value, node.right);
+  }
   
 
   #buildTreeFromSorted(array, start, end) {
