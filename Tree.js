@@ -47,6 +47,37 @@ class Tree {
     }
   }
 
+      deleteItem(value) {
+    this.root = this.#deleteNode(value, this.root);
+  }
+
+  #deleteNode(value, node) {
+    if (node === null) return null;
+
+    if (value < node.data) {
+      node.left = this.#deleteNode(value, node.left);
+      return node;
+    } else if (value > node.data) {
+      node.right = this.#deleteNode(value, node.right);
+      return node;
+    } else {
+      if (node.left === null && node.right === null) {
+        return null;
+      }
+      if (node.left === null) return node.right;
+      if (node.right === null) return node.left;
+
+      let successor = node.right;
+      while (successor.left !== null) {
+        successor = successor.left;
+      }
+
+      node.data = successor.data;
+      node.right = this.#deleteNode(successor.data, node.right);
+      return node;
+    }
+  }
+
   #buildTreeFromSorted(array, start, end) {
     if (start > end) return null;
 
