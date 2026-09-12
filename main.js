@@ -1,25 +1,68 @@
 import Tree from "./Tree.js";
 import prettyPrint from "./prettyPrint.js";
 
-const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+function generateRandomArray(size = 15, max = 100) {
+  const array = [];
+  for (let i = 0; i < size; i++) {
+    array.push(Math.floor(Math.random() * max));
+  }
+  return array;
+}
+
+function printAllTraversals(tree) {
+  const levelOrder = [];
+  tree.levelOrderForEach((value) => levelOrder.push(value));
+  console.log("Level order:", levelOrder);
+
+  const preOrder = [];
+  tree.preOrderForEach((value) => preOrder.push(value));
+  console.log("Pre order:  ", preOrder);
+
+  const postOrder = [];
+  tree.postOrderForEach((value) => postOrder.push(value));
+  console.log("Post order: ", postOrder);
+
+  const inOrder = [];
+  tree.inOrderForEach((value) => inOrder.push(value));
+  console.log("In order:   ", inOrder);
+}
+
+// 1. Create a BST from an array of random numbers < 100
+const randomArray = generateRandomArray();
+const tree = new Tree(randomArray);
+
+console.log("=== Initial Tree ===");
 prettyPrint(tree.root);
 
-console.log("--- isBalanced (should be true, built with buildTree) ---");
-console.log(tree.isBalanced());
+// 2. Confirm the tree is balanced
+console.log("\nIs balanced?", tree.isBalanced()); // true
 
-console.log("--- Unbalancing the tree ---");
+// 3. Print all elements in level, pre, post, and in order
+console.log("\n=== Traversals (balanced) ===");
+printAllTraversals(tree);
+
+// 4. Unbalance the tree with several numbers > 100
+tree.insert(150);
 tree.insert(200);
+tree.insert(250);
 tree.insert(300);
-tree.insert(400);
-tree.insert(500);
+tree.insert(350);
+
+console.log("\n=== Tree After Unbalancing ===");
 prettyPrint(tree.root);
 
-console.log("--- isBalanced (should now be false) ---");
-console.log(tree.isBalanced());
+// 5. Confirm the tree is now unbalanced
+console.log("\nIs balanced?", tree.isBalanced()); // false
 
-console.log("--- Rebalancing ---");
+// 6. Rebalance the tree
 tree.rebalance();
+
+// 7. Confirm the tree is balanced again
+console.log("\nIs balanced?", tree.isBalanced()); // true
+
+console.log("\n=== Tree After Rebalancing ===");
 prettyPrint(tree.root);
 
-console.log("--- isBalanced (should be true again) ---");
-console.log(tree.isBalanced());
+// 8. Print all elements in level, pre, post, and in order
+console.log("\n=== Traversals (rebalanced) ===");
+printAllTraversals(tree);
