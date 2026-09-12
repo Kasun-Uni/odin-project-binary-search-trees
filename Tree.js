@@ -163,6 +163,32 @@ class Tree {
     if (value < node.data) return this.#find(value, node.left);
     return this.#find(value, node.right);
   }
+
+    isBalanced(node = this.root) {
+    if (node === null) return true;
+
+    const checkHeight = (current) => {
+      if (current === null) return 0;
+
+      const leftHeight = checkHeight(current.left);
+      if (leftHeight === -1) return -1;
+
+      const rightHeight = checkHeight(current.right);
+      if (rightHeight === -1) return -1;
+
+      if (Math.abs(leftHeight - rightHeight) > 1) return -1;
+
+      return Math.max(leftHeight, rightHeight) + 1;
+    };
+
+    return checkHeight(node) !== -1;
+  }
+
+  rebalance() {
+    const values = [];
+    this.inOrderForEach((value) => values.push(value));
+    this.root = this.buildTree(values);
+  }
   
 
   #buildTreeFromSorted(array, start, end) {
