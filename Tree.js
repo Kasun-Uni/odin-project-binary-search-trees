@@ -78,6 +78,24 @@ class Tree {
     }
   }
 
+    levelOrderForEach(callback) {
+    if (typeof callback !== "function") {
+      throw new Error("A callback function is required");
+    }
+
+    if (this.root === null) return;
+
+    const queue = [this.root];
+
+    while (queue.length > 0) {
+      const current = queue.shift();
+      callback(current.data);
+
+      if (current.left !== null) queue.push(current.left);
+      if (current.right !== null) queue.push(current.right);
+    }
+  }
+
   #buildTreeFromSorted(array, start, end) {
     if (start > end) return null;
 
