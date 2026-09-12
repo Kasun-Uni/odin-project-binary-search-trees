@@ -96,6 +96,43 @@ class Tree {
     }
   }
 
+    inOrderForEach(callback, node = this.root) {
+    if (typeof callback !== "function") {
+      throw new Error("A callback function is required");
+    }
+
+    if (node === null) return;
+
+    this.inOrderForEach(callback, node.left);
+    callback(node.data);
+    this.inOrderForEach(callback, node.right);
+  }
+
+  preOrderForEach(callback, node = this.root) {
+    if (typeof callback !== "function") {
+      throw new Error("A callback function is required");
+    }
+
+    if (node === null) return;
+
+    callback(node.data);
+    this.preOrderForEach(callback, node.left);
+    this.preOrderForEach(callback, node.right);
+  }
+
+  postOrderForEach(callback, node = this.root) {
+    if (typeof callback !== "function") {
+      throw new Error("A callback function is required");
+    }
+
+    if (node === null) return;
+
+    this.postOrderForEach(callback, node.left);
+    this.postOrderForEach(callback, node.right);
+    callback(node.data);
+  }
+  
+
   #buildTreeFromSorted(array, start, end) {
     if (start > end) return null;
 

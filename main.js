@@ -4,14 +4,17 @@ import prettyPrint from "./prettyPrint.js";
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 prettyPrint(tree.root);
 
-console.log("--- Level order traversal ---");
-const levelOrderValues = [];
-tree.levelOrderForEach((value) => levelOrderValues.push(value));
-console.log(levelOrderValues);
+console.log("--- In-order (left, node, right) ---");
+const inOrder = [];
+tree.inOrderForEach((value) => inOrder.push(value));
+console.log(inOrder); // should be sorted ascending
 
-// Test error case
-try {
-  tree.levelOrderForEach();
-} catch (error) {
-  console.log(error.message); // "A callback function is required"
-}
+console.log("--- Pre-order (node, left, right) ---");
+const preOrder = [];
+tree.preOrderForEach((value) => preOrder.push(value));
+console.log(preOrder);
+
+console.log("--- Post-order (left, right, node) ---");
+const postOrder = [];
+tree.postOrderForEach((value) => postOrder.push(value));
+console.log(postOrder);
